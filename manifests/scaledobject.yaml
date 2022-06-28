@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: demo-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: demo-keda
+  pollingInterval: 3
+  cooldownPeriod: 60
+  minReplicaCount: 0
+  maxReplicaCount: 10
+  triggers:
+  - type: aws-sqs-queue
+    metadata:
+      queueURL: demo-keda
+      queueLength: "10"
+      awsRegion: "ap-northeast-1"
+      identityOwner: operator

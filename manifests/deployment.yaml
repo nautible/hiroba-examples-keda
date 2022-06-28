@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-keda
+  namespace: default
+  labels:
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-keda
+  template:
+    metadata:
+      labels:
+        app: demo-keda
+    spec:
+      containers:
+      - name: demo-keda
+        image: <レジストリ>/<リポジトリ>:<バージョン>
+        env:
+        - name: ACCOUNT_ID
+          value: "<AWSアカウントID>"
+        - name: REGION
+          value: "<リージョン>"
