@@ -35,7 +35,7 @@ func receiveMessages(chn chan<- *sqs.Message) {
 func main() {
 	accountId = os.Getenv("ACCOUNT_ID")
 	region = os.Getenv("REGION")
-	sqsUrl = fmt.Sprintf("https://sqs.%s.amazonaws.com/%s/demo-keda", region, accountId)
+	sqsUrl = fmt.Sprintf("https://sqs.%s.amazonaws.com/%s/demo-keda-queue", region, accountId)
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(region)},
 	)
