@@ -14,11 +14,15 @@ KEDAの動作確認用サンプルアプリケーションになります。
 
 管理コンソールよりサンプルアプリケーション用のSQSを作成します。（キュー名：demo-keda-queue）
 
-## 2. サンプルアプリケーションの準備
+## 2. KEDAの導入
+
+[nautible-pluginのpod-autoscaler](https://github.com/nautible/nautible-plugin/tree/main/pod-autoscaler)を参考にKEDAをクラスタに導入します。
+
+## 3. サンプルアプリケーションの準備
 
 サンプルアプリケーションのコンテナイメージを準備します。
 
-### 2.1 サンプルアプリケーションのビルド
+### 3.1 サンプルアプリケーションのビルド
 
 ```bash
 cd pod-autoscaler/sample
@@ -26,7 +30,7 @@ docker build -t demo-keda:latest .
 docker tag demo-keda:latest <レジストリ名>/demo-keda:latest
 ```
 
-### 2.2 サンプルアプリケーションのプッシュ（ECR利用時の手順）
+### 3.2 サンプルアプリケーションのプッシュ（ECR利用時の手順）
 
 ECRへログイン
 
@@ -40,15 +44,15 @@ ECRへイメージをプッシュ
 docker push <レジストリ名>/demo-keda:latest
 ```
 
-## 3. マニフェストの導入
+## 4. サンプルアプリケーションの導入
 
 環境ごとの設定をマニフェストに設定し、反映します。
 
-### 3.1 マニフェストに環境ごとの設定値を定義
+### 4.1 マニフェストに環境ごとの設定値を定義
 
 イメージの指定及び環境変数（ACCOUNT_ID,REGION）を指定します。
 
-pod-autoscaler/sample/manifests/deployment.yaml
+manifests/deployment.yaml
 
 ```yaml
 ...
@@ -63,10 +67,10 @@ pod-autoscaler/sample/manifests/deployment.yaml
           value: "<リージョン>"
 ```
 
-### 3.2 マニフェストを反映
+### 4.2 マニフェストを反映
 
 ```bash
-cd pod-autoscaler/sample/manifests
+cd manifests
 kubectl apply -f .
 ```
 
